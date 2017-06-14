@@ -1,9 +1,22 @@
 var app = angular.module('myApp', ['ui.router','ngToast','textAngular']);
 
-app.run(function($rootScope, AuthService, $state){
-    $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
-        if(toState.authenticate == true)
-        {
+app.run(function($rootScope, AuthService, $state, $transitions){
+    // $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
+    //     if(toState.authenticate == true)
+    //     {
+    //         AuthService.isAuthenticated()
+    //         .then(function(res){
+    //             console.log(res);
+    //             if(res == false)
+    //             {
+    //                 $state.go('login');
+    //             }
+    //         });
+    //     }
+    // })
+    
+    $transitions.onStart({}, function(transition){
+        if(transition.$to().self.authenticate == true){
             AuthService.isAuthenticated()
             .then(function(res){
                 console.log(res);
